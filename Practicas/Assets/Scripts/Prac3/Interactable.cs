@@ -13,7 +13,7 @@ public class Interactable : MonoBehaviour
 
     void Update()
     {
-        if(isInsideZone && Input.GetKeyDown(KeyCode.I))
+        if(isInsideZone)
         {
             Interact();
         }
