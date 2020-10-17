@@ -7,10 +7,12 @@ public class Coin : Interactable
     Rigidbody rb;
     public float torque;
     bool interactionSet = false;
-    
+    private AudioSource source;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        source = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -24,6 +26,11 @@ public class Coin : Interactable
     public override void Interact()
     {
         base.Interact();
+        if (!source.isPlaying)
+        {
+            source.Play();
+        }
+        Destroy(gameObject,1);
         interactionSet = true;
     }
 }
