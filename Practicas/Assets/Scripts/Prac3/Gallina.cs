@@ -20,8 +20,10 @@ public class Gallina : Interactable
         base.Interact();
         if (rb != null)
         {
-            source.Play();
-            Debug.Log("Audio");
+            if (!source.isPlaying)
+            {
+                source.Play();
+            }
             //Destroy(gameObject,1);
             rb.AddForce(jumpDirection * jumpForce, ForceMode.Force);
         }
