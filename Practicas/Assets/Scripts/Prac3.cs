@@ -18,14 +18,7 @@ public class Prac3 : MonoBehaviour
     {
         int[] answer = new int[2];
         int addend;
-        //Crear lista con indices de numeros menores al target
-        /*List<int> lowNumsIdx = new List<int>();
-        for (int i = 0; i < nums.Length; i++)
-        {
-            if(nums[i]<=target){
-                lowNumsIdx.Add(i);
-            }
-        }*/
+        
         //Obtener el segundo sumando a buscar en la lista
         for (int i = 0; i < nums.Length; i++)
         {
