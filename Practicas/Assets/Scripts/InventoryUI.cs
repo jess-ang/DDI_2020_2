@@ -15,6 +15,7 @@ public class InventoryUI : MonoBehaviour
             return;
         }
         inventoryUIPanel.SetActive(false);
+        inventory.onChange += UpdateUI;
     }
 
     // Update is called once per frame

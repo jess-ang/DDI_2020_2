@@ -26,11 +26,30 @@ public class Slot : MonoBehaviour
     {
         this.item = item;
         image.sprite  = item.icon;
+        image.enabled = true;
     }
 
     public void Clear()
     {
         this.item = null;
         image.sprite = null;
+        image.enabled = false;
+    }
+
+    public void RemoveFromInventory()
+    {
+        if(item != null)
+        {
+            inventory.Remove(item);
+        }
+    }
+
+    public void UseItem()
+    {
+        if(item != null)
+        {
+            item.Use();
+            RemoveFromInventory();
+        }
     }
 }

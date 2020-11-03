@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    public delegate void OnChange();
+    public OnChange onChange;
     public int space = 10;
     public List<Item> items = new List<Item>();
     
@@ -12,11 +14,16 @@ public class Inventory : MonoBehaviour
         if(items.Count < space)
         {
             items.Add(item);
+            if(onChange != null)
+            {
+                onChange.Invoke();
+            }
         }
         else
         {
             Debug.LogWarning("Espacio insuficiente!");
         }
+
     }
 
     public void Remove(Item item)
@@ -24,6 +31,10 @@ public class Inventory : MonoBehaviour
         if(items.Contains(item))
         {
             items.Remove(item);
+            if(onChange != null)
+            {
+                onChange.Invoke();
+            }
         }
         else
         {
