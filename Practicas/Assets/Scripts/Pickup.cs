@@ -19,7 +19,14 @@ public class Pickup : Interactable
     public override void Interact()
     {
         Debug.Log("Levantando item");
-        inventory.Add(item);
+        if(item.itemType!=ItemType.Money)
+        {
+            inventory.Add(item);
+        }
+        else
+        {
+            Debug.Log("Sumando monedas");
+        }
         Destroy(gameObject);
     }
 }

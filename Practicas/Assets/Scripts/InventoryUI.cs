@@ -9,7 +9,8 @@ public class InventoryUI : MonoBehaviour
 
     void Start()
     {
-        inventory = FindObjectOfType<Inventory>();
+        // inventory = FindObjectOfType<Inventory>();
+        inventory = Inventory.InventoryInstance;
         if(inventory == null)
         {
             return;

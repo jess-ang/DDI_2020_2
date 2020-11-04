@@ -5174,7 +5174,7 @@ GameObject:
   - component: {fileID: 794901120}
   - component: {fileID: 794901119}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Revolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5192,7 +5192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1c111171c97334290895659e2cefd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 893b040a844d6294ab9728eae6bc32c1, type: 2}
+  item: {fileID: 11400000, guid: d24b9949e32b31a4dbf358a198d6c6a5, type: 2}
 --- !u!135 &794901120
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7299,7 +7299,7 @@ GameObject:
   - component: {fileID: 1127696888}
   - component: {fileID: 1127696887}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Handgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7317,7 +7317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1c111171c97334290895659e2cefd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: 893b040a844d6294ab9728eae6bc32c1, type: 2}
+  item: {fileID: 11400000, guid: 9ca98c384498c504f8bcc53e151d6f2a, type: 2}
 --- !u!135 &1127696888
 SphereCollider:
   m_ObjectHideFlags: 0
