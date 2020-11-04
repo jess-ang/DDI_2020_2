@@ -15,9 +15,9 @@ public class DirectionalMovement : MonoBehaviour
     private void MoveCharacter()
     {
         float multiplier = 1f;
-        if(Input.GetKey(KeyCode.LeftShift))
+        if(Input.GetKey(KeyCode.RightControl))
             multiplier *= sneakMultiplier;
-        if(Input.GetKey(KeyCode.LeftControl))
+        if(Input.GetKey(KeyCode.RightShift))
             multiplier *= runMultiplier;
         
         Vector3 vector = Vector3.zero;
