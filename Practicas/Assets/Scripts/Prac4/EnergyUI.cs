@@ -10,7 +10,6 @@ public class EnergyUI : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("energy asignada!!!");
         image = GetComponent<Image>();
     }
 

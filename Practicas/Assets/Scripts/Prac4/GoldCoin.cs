@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
+
 public class GoldCoin : Interactable
 {
     Rigidbody rb;
-    private AudioSource source;
     private float speed;
     private GameObject player;
+    public int points = 10;
 
     void Awake()
     {
@@ -32,7 +34,7 @@ public class GoldCoin : Interactable
         Money money = player.GetComponent<Money>();
         if (money != null)
         {
-            money.ModifyMoney(10);
+            money.ModifyMoney(points);
         }
         Destroy(gameObject,0.7f);
 

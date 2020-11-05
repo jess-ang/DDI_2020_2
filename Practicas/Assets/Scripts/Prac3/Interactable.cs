@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Interactable : MonoBehaviour
 {
     bool isInsideZone = false;
+    protected AudioSource source;
 
     public virtual void Interact()
     {

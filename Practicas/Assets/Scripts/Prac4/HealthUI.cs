@@ -10,8 +10,6 @@ public class HealthUI : MonoBehaviour
 
     private void Awake()
     {
-                Debug.Log("health asignada!!!");
-
         image = GetComponent<Image>();
     }
 

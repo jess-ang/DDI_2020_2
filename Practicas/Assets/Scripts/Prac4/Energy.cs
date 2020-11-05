@@ -7,13 +7,22 @@ public class Energy : MonoBehaviour
 {
     public float energy = 100f;
     private float _minEnergy, _maxEnergy;
+    private bool _enableAttack;
+    private int _energyLoss; 
     public GameObject[] energyAware;
 
     void Start()
     {
         _minEnergy = 0f;
         _maxEnergy = energy;
+        _enableAttack = true;
+        _energyLoss = -10;
         InitializeEnergy(_maxEnergy);
+    }
+
+    void Update()
+    {
+        Attack();
     }
 
     private void InitializeEnergy(float maxEnergy)
@@ -35,15 +44,29 @@ public class Energy : MonoBehaviour
     public void ModifyEnergy(float delta)
     {
         energy = Mathf.Clamp(energy += delta, _minEnergy, _maxEnergy);
-     if (energy <= 0) 
-            DisableAttack();
+        if (energy <= 0) 
+            _enableAttack = false;
         else if (energy < _maxEnergy) 
+        {
             SetEnergy(energy);
+            _enableAttack = true;
+        }
     }
 
-    private void DisableAttack()
+    private void Attack()
     {
-        Debug.Log("Poder deshabilitado!!!");
-        // Time.timeScale = 0f;
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            if(_enableAttack)
+            {
+                Debug.Log("Atacando con poder especial!");
+                ModifyEnergy(_energyLoss);    
+            }
+            else
+            {
+                Debug.Log("No tengo energía para atacar");
+            }
+
+        }    
     }
 }

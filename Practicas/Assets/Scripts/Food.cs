@@ -12,10 +12,10 @@ public class Food : Item
     {
         player = GameObject.Find("MainPlayer");        
         Energy energy = player.GetComponent<Energy>();
-        Debug.Log("Eating " +name+ ". Increasing energy: +" +energyPoints);
         if (energy != null)
         {
             energy.ModifyEnergy(energyPoints);
         }
+        Debug.Log("Eating " +name+ ". Increasing energy: +" +energyPoints);
     } 
 }

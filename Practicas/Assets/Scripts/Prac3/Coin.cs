@@ -7,7 +7,6 @@ public class Coin : Interactable
     Rigidbody rb;
     public float torque;
     bool interactionSet = false;
-    private AudioSource source;
 
     void Awake()
     {

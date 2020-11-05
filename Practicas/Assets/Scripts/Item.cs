@@ -7,7 +7,6 @@ public enum ItemType
     Weapon,
     Equip,
     Healing,
-    Money,
 }
 
 [CreateAssetMenu(fileName = "Nuevo Item", menuName = "Inventario/Generic Item")]

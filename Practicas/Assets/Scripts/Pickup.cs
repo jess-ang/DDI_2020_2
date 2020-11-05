@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
+
 public class Pickup : Interactable
 {
     private Inventory inventory;
     public Item item;
-    private AudioSource source;
 
     void Awake()
     {
@@ -29,10 +30,7 @@ public class Pickup : Interactable
         {
             source.Play();
         }
-        if(item.itemType!=ItemType.Money)
-        {
-            inventory.Add(item);
-        }
+        inventory.Add(item);
         Destroy(gameObject,0.7f);
     }
 }

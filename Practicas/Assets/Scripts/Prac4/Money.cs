@@ -7,7 +7,6 @@ public class Money : MonoBehaviour
     public int money = 0;
     private int _minMoney;
     public GameObject moneyAware;
-    // Start is called before the first frame update
     void Start()
     {
         _minMoney = 0;
