@@ -5,25 +5,25 @@ using UnityEngine.UI;
 
 public class EnergyUI : MonoBehaviour
 {
-    protected float maxHealth, currentHealth;
+    protected float maxEnergy, currentEnergy;
     private Image image;
 
     private void Awake()
     {
-        Debug.Log("IMagen asignada!!!");
+        Debug.Log("energy asignada!!!");
         image = GetComponent<Image>();
     }
 
-    public void InitializeHealth(float health)
+    public void InitializeEnergy(float energy)
     {
-        maxHealth = health;
-        currentHealth = health;
+        maxEnergy = energy;
+        currentEnergy = energy;
     }
 
-    public void SetHealth(float newHealth)
+    public void SetEnergy(float newEnergy)
     {
-        currentHealth = newHealth;
-        float healthRatio = currentHealth / maxHealth;
-        image.fillAmount = healthRatio;
+        currentEnergy = newEnergy;
+        float energyRatio = currentEnergy / maxEnergy;
+        image.fillAmount = energyRatio;
     }
 }

@@ -6,19 +6,24 @@ public class GoldCoin : Interactable
 {
     Rigidbody rb;
     private AudioSource source;
+    private float speed;
     private GameObject player;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
+        speed = 100;
     }
 
+    void FixedUpdate ()
+    {
+        transform.Rotate(Vector3.up * speed * Time.deltaTime);
+	}
 
     public override void Interact()
     {
         base.Interact();
-        Debug.Log("Recogiendo moneda...");
         if (!source.isPlaying)
         {
             source.Play();
@@ -27,10 +32,9 @@ public class GoldCoin : Interactable
         Money money = player.GetComponent<Money>();
         if (money != null)
         {
-        Debug.Log("SUmando dinero");
             money.ModifyMoney(10);
         }
-        Destroy(gameObject,1f);
+        Destroy(gameObject,0.7f);
 
     }
 }

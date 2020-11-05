@@ -9,10 +9,8 @@ public class EnergyModifier : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         Energy energy = other.GetComponent<Energy>();
-        Debug.Log("Colision!!!");
         if (energy != null)
         {
-            Debug.Log("Energia asognada!!!");
             energy.ModifyEnergy(deltaHp * Time.deltaTime);
         }
     }

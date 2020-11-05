@@ -6,10 +6,16 @@ public class Pickup : Interactable
 {
     private Inventory inventory;
     public Item item;
+    private AudioSource source;
 
+    void Awake()
+    {
+        source = GetComponent<AudioSource>();
+    }
     void Start()
     {
         inventory = FindObjectOfType<Inventory>();
+        
         if(inventory == null)
         {
             Debug.LogWarning("No se encontró el inventario");
@@ -19,14 +25,14 @@ public class Pickup : Interactable
     public override void Interact()
     {
         Debug.Log("Levantando item");
+        if (!source.isPlaying)
+        {
+            source.Play();
+        }
         if(item.itemType!=ItemType.Money)
         {
             inventory.Add(item);
         }
-        else
-        {
-            Debug.Log("Sumando monedas");
-        }
-        Destroy(gameObject);
+        Destroy(gameObject,0.7f);
     }
 }

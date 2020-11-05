@@ -36,12 +36,12 @@ public class Energy : MonoBehaviour
     {
         energy = Mathf.Clamp(energy += delta, _minEnergy, _maxEnergy);
      if (energy <= 0) 
-            Die();
+            DisableAttack();
         else if (energy < _maxEnergy) 
             SetEnergy(energy);
     }
 
-    private void Die()
+    private void DisableAttack()
     {
         Debug.Log("Poder deshabilitado!!!");
         // Time.timeScale = 0f;
