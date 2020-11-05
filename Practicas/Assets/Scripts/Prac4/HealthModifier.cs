@@ -10,9 +10,13 @@ public class HealthModifier : MonoBehaviour
     
     void OnTriggerStay(Collider other)
     {
+                Debug.Log("Colision!!!");
+
         Health health = other.GetComponent<Health>();
         if (health != null)
         {
+                        Debug.Log("health asognada!!!");
+
             health.ModifyHealth(deltaHp * Time.deltaTime);
         }
     }

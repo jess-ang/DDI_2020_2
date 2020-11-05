@@ -6,11 +6,11 @@ public enum ItemType
 {
     Weapon,
     Equip,
-    Medicine,
-    Money
+    Healing,
+    Money,
 }
 
-[CreateAssetMenu(fileName = "Nuevo Item", menuName = "Inventrario/Generic Item")]
+[CreateAssetMenu(fileName = "Nuevo Item", menuName = "Inventario/Generic Item")]
 public class Item : ScriptableObject
 {
     public Sprite icon = null;

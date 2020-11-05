@@ -40,10 +40,9 @@ public class Slot : MonoBehaviour
     {
         if(item != null)
         {
-            if(item.itemType != ItemType.Weapon)
-            {
-                inventory.Remove(item);
-            }
+            
+            inventory.Remove(item);
+            
         }
     }
 
@@ -52,7 +51,10 @@ public class Slot : MonoBehaviour
         if(item != null)
         {
             item.Use();
-            RemoveFromInventory();
+            if(item.itemType != ItemType.Weapon)
+            {
+                RemoveFromInventory();
+            }
         }
     }
 }

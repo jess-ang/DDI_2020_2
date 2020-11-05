@@ -3,13 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[DisallowMultipleComponent]
-[RequireComponent(typeof(Collider))]
 public class Health : MonoBehaviour
 {
     public float health = 100f;
     private float _minHealth, _maxHealth;
-    // private Invulnerability _inv;
     public GameObject[] healthAware;
 
     void Start()
