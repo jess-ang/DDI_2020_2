@@ -25,7 +25,6 @@ public class Pickup : Interactable
 
     public override void Interact()
     {
-        Debug.Log("Levantando item");
         if (!source.isPlaying)
         {
             source.Play();

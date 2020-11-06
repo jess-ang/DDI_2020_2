@@ -7,43 +7,37 @@ public class Health : MonoBehaviour
 {
     public float health = 100f;
     private float _minHealth, _maxHealth;
-    public GameObject[] healthAware;
+    public GameObject healthAware;
 
     void Start()
     {
         _minHealth = 0f;
-        _maxHealth = health;
+        _maxHealth = 100f;
         InitializeHealth(_maxHealth);
+        SetHealth(_maxHealth);
     }
 
     private void InitializeHealth(float maxHealth)
     {
-        foreach (GameObject go in healthAware)
-        {
-            go.SendMessage(nameof(InitializeHealth), maxHealth, SendMessageOptions.DontRequireReceiver);
-        }
+        healthAware.SendMessage(nameof(InitializeHealth), maxHealth, SendMessageOptions.DontRequireReceiver);
     }
 
     private void SetHealth(float newHealth)
     {
-        foreach (GameObject go in healthAware)
-        {
-            go.SendMessage(nameof(SetHealth), newHealth, SendMessageOptions.DontRequireReceiver);
-        }
+        healthAware.SendMessage(nameof(SetHealth), newHealth, SendMessageOptions.DontRequireReceiver);
     }
 
     public void ModifyHealth(float delta)
     {
         health = Mathf.Clamp(health += delta, _minHealth, _maxHealth);
-        if (health <= 0) 
-            Die();
-        else if (health < _maxHealth) 
-            SetHealth(health);
-    }
 
+        if (health > _minHealth) 
+            SetHealth(health);
+        else
+            Die();
+    }
     private void Die()
     {
         Debug.Log("Perdiste!!!");
-        // Time.timeScale = 0f;
     }
 }

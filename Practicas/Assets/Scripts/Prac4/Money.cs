@@ -21,10 +21,9 @@ public class Money : MonoBehaviour
     public void ModifyMoney(int delta)
     {
         money += delta;
+        SetMoney(money);
         if(money<=0)
             NotifyNoMoney();
-        else 
-            SetMoney(money);
     }
     private void NotifyNoMoney()
     {

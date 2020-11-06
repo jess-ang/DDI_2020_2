@@ -6,18 +6,19 @@ using UnityEngine;
 public class Energy : MonoBehaviour
 {
     public float energy = 100f;
-    private float _minEnergy, _maxEnergy;
+    private float _maxEnergy, _minEnergy;
+    private float _energyLoss; 
     private bool _enableAttack;
-    private int _energyLoss; 
-    public GameObject[] energyAware;
+    public GameObject energyAware;
 
     void Start()
     {
         _minEnergy = 0f;
         _maxEnergy = energy;
         _enableAttack = true;
-        _energyLoss = -10;
+        _energyLoss = -10f;
         InitializeEnergy(_maxEnergy);
+        SetEnergy(_maxEnergy);
     }
 
     void Update()
@@ -27,29 +28,24 @@ public class Energy : MonoBehaviour
 
     private void InitializeEnergy(float maxEnergy)
     {
-        foreach (GameObject go in energyAware)
-        {
-            go.SendMessage(nameof(InitializeEnergy), maxEnergy, SendMessageOptions.DontRequireReceiver);
-        }
+       energyAware.SendMessage(nameof(InitializeEnergy), maxEnergy, SendMessageOptions.DontRequireReceiver);
     }
 
     private void SetEnergy(float newEnergy)
     {
-        foreach (GameObject go in energyAware)
-        {
-            go.SendMessage(nameof(SetEnergy), newEnergy, SendMessageOptions.DontRequireReceiver);
-        }
+        energyAware.SendMessage(nameof(SetEnergy), newEnergy, SendMessageOptions.DontRequireReceiver);
     }
 
     public void ModifyEnergy(float delta)
     {
         energy = Mathf.Clamp(energy += delta, _minEnergy, _maxEnergy);
-        if (energy <= 0) 
-            _enableAttack = false;
-        else if (energy < _maxEnergy) 
-        {
-            SetEnergy(energy);
+
+        SetEnergy(energy);
+        if (energy > _minEnergy) 
             _enableAttack = true;
+        else  
+        {
+            _enableAttack = false;
         }
     }
 

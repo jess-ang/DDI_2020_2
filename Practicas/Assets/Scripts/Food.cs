@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Food : Item
 {
-    public int energyPoints = 10;
+    public float energyPoints = 10f;
     private GameObject player;
     public override void Use()
     {

@@ -17,7 +17,7 @@ public class Gallina : Interactable
 
     public override void Interact()
     {
-        base.Interact();
+        // base.Interact();
         if (!source.isPlaying)
         {
             source.Play();
@@ -25,7 +25,6 @@ public class Gallina : Interactable
         if (rb != null)
         {
             rb.AddForce(jumpDirection * jumpForce, ForceMode.Force);
-            Debug.Log("Gallina saltando...");
         }
     }
 }
