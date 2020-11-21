@@ -6,7 +6,7 @@ public class Jump : MonoBehaviour
 {
     public float jumpForce;
     private Rigidbody _rb;
-    // Start is called before the first frame update
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class CameraZoom : MonoBehaviour
 {
@@ -19,9 +20,9 @@ public class CameraZoom : MonoBehaviour
 
     private void CheckZoom()
     {
-        if(Input.GetKey(KeyCode.UpArrow))
+        if(CrossPlatformInputManager.GetButtonDown("ZoomIn"))
             ChangeFOV(-zoomRate);
-        if(Input.GetKey(KeyCode.DownArrow))
+        if(CrossPlatformInputManager.GetButtonDown("ZoomOut"))
             ChangeFOV(zoomRate);
     }
 

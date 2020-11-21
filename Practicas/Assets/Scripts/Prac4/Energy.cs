@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Energy : MonoBehaviour
 {
@@ -51,7 +52,8 @@ public class Energy : MonoBehaviour
 
     private void Attack()
     {
-        if(Input.GetKeyDown(KeyCode.Return))
+        // if(Input.GetKeyDown(KeyCode.Return))
+        if(CrossPlatformInputManager.GetButtonDown("Attack"))
         {
             if(_enableAttack)
             {
