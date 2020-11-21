@@ -6,6 +6,7 @@ using UnityStandardAssets.CrossPlatformInput;
 public class InventoryUI : MonoBehaviour
 {
     public GameObject inventoryUIPanel;
+    public GameObject controllers;
     private Inventory inventory;
 
     void Start()
