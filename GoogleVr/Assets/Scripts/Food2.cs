@@ -25,14 +25,15 @@ namespace GoogleVR.HelloVR
     [RequireComponent(typeof(Collider))]
     public class Food2 : MonoBehaviour
     {
-
-        private bool foodRotate = false;
-
         Rigidbody rb;
         private GameObject player;
         private float speed = 300f;
         public int energyPoints = 10;
         private AudioSource source;
+
+        public float triggerInteractionTime = 0.5f;
+        public float interactionTimer = 0f;
+        private bool timerRunning = false;
 
         void Awake()
         {
@@ -42,9 +43,15 @@ namespace GoogleVR.HelloVR
 
         void FixedUpdate ()
         {
-            if(foodRotate)
+            if(timerRunning)
             {
                 transform.Rotate(Vector3.up * speed * Time.deltaTime);
+                interactionTimer += Time.deltaTime;
+                Interact();
+                if (interactionTimer > triggerInteractionTime)
+                {
+                    Destroy(gameObject,0.7f);
+                }
             }
         }
         /// <summary>Sets this instance's GazedAt state.</summary>
@@ -55,11 +62,12 @@ namespace GoogleVR.HelloVR
         {
             if (gazedAt)
             {
-                foodRotate = true;
+                timerRunning = true;
             }
             else
             {
-                foodRotate = false;
+                timerRunning = false;
+                interactionTimer = 0f;
             }
         }
 
@@ -67,6 +75,7 @@ namespace GoogleVR.HelloVR
         private void Start()
         {
             SetGazedAt(false);
+            player = GameObject.Find("Player");        
         }
 
         public void Interact()
@@ -76,13 +85,11 @@ namespace GoogleVR.HelloVR
                 source.Play();
             }
             
-            player = GameObject.Find("Player");        
             Energy energy = player.GetComponent<Energy>();
             if (energy != null)
             {
-                energy.ModifyEnergy(energyPoints);
+                energy.ModifyEnergy(energyPoints*Time.deltaTime);
             }
-            Destroy(gameObject,0.7f);
         } 
     }
 }

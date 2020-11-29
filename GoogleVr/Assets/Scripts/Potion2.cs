@@ -31,6 +31,11 @@ namespace GoogleVR.HelloVR
         public int lifePoints = 10;
         private AudioSource source;
 
+
+        public float triggerInteractionTime = 0.5f;
+        public float interactionTimer = 0f;
+        private bool timerRunning = false;
+
         void Awake()
         {
             source = GetComponent<AudioSource>();
@@ -38,9 +43,14 @@ namespace GoogleVR.HelloVR
 
         void Update ()
         {
-            if(restoreHealth)
+            if(timerRunning)
             {
+                interactionTimer += Time.deltaTime;
                 Interact();
+                if (interactionTimer > triggerInteractionTime)
+                {
+                    Destroy(gameObject,0.7f);
+                }
             }
         }
 
@@ -52,22 +62,27 @@ namespace GoogleVR.HelloVR
         {
             if (gazedAt)
             {
-                restoreHealth = true;
+                timerRunning = true;
             }
             else
             {
-                restoreHealth = false;
+                timerRunning = false;
+                interactionTimer = 0f;
             }
         }
 
         private void Start()
         {
             SetGazedAt(false);
+            player = GameObject.Find("Player");        
         }
 
         public void Interact()
         {
-            player = GameObject.Find("Player");        
+            if (!source.isPlaying)
+            {
+                source.Play();
+            }
             Health health = player.GetComponent<Health>();
             if (health != null)
             {

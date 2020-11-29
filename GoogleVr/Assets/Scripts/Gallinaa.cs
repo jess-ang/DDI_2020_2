@@ -26,7 +26,10 @@ namespace GoogleVR.HelloVR
     public class Gallinaa : MonoBehaviour
     {
         
-        private bool coinRotate = false;
+        public float triggerInteractionTime = 0.1f;
+        public float interactionTimer = 0f;
+        private bool timerRunning = false;
+        private bool interact = true;
 
         Rigidbody rb;
         public Vector3 jumpDirection;
@@ -40,7 +43,18 @@ namespace GoogleVR.HelloVR
         source = GetComponent<AudioSource>();
     }
 
-
+        void FixedUpdate ()
+        {
+            if(timerRunning)
+            {
+                interactionTimer += Time.deltaTime;
+                if (interactionTimer > triggerInteractionTime && interact)
+                {
+                    Interact();
+                    interact = false;
+                }
+            }
+        }
         /// <summary>Sets this instance's GazedAt state.</summary>
         /// <param name="gazedAt">
         /// Value `true` if this object is being gazed at, `false` otherwise.
@@ -49,11 +63,13 @@ namespace GoogleVR.HelloVR
         {
             if (gazedAt)
             {
-                coinRotate = true;
+                timerRunning = true;
             }
             else
             {
-                coinRotate = false;
+                timerRunning = false;
+                interactionTimer = 0f;
+                player = GameObject.Find("Player");
             }
         }
 
@@ -66,21 +82,19 @@ namespace GoogleVR.HelloVR
         public void Interact()
         {
             if (!source.isPlaying)
-        {
-            source.Play();
-        }
-        if (rb != null)
-        {
-            rb.AddForce(jumpDirection * jumpForce, ForceMode.Force);
-            Debug.Log("Gallina saltando...");
-        }
-        player = GameObject.Find("Player");
-        HenScore henScore = player.GetComponent<HenScore>();
-        if (henScore != null)
-        {
-            henScore.ModifyHenScore();
-        }
-        Destroy(gameObject,0.7f);
+            {
+                source.Play();
+            }
+            if (rb != null)
+            {
+                rb.AddForce(jumpDirection * jumpForce, ForceMode.Force);
+            }
+            HenScore henScore = player.GetComponent<HenScore>();
+            if (henScore != null)
+            {
+                henScore.ModifyHenScore();
+            }
+            Destroy(gameObject,0.7f);
         }
     }
 }

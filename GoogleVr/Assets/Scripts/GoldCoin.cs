@@ -23,10 +23,13 @@ namespace GoogleVR.HelloVR
 
     /// <summary>Controls interactable teleporting objects in the Demo scene.</summary>
     [RequireComponent(typeof(Collider))]
-    public class Interactable2 : MonoBehaviour
+    public class GoldCoin : MonoBehaviour
     {
         
-        private bool coinRotate = false;
+        public float triggerInteractionTime = 0.1f;
+        public float interactionTimer = 0f;
+        private bool timerRunning = false;
+        private bool interact = true;
 
         Rigidbody rb;
         private float speed;
@@ -43,9 +46,15 @@ namespace GoogleVR.HelloVR
 
         void FixedUpdate ()
         {
-            if(coinRotate)
+            if(timerRunning)
             {
                 transform.Rotate(Vector3.up * speed * Time.deltaTime);
+                interactionTimer += Time.deltaTime;
+                if (interactionTimer > triggerInteractionTime && interact)
+                {
+                    Interact();
+                    interact = false;
+                }
             }
         }
 
@@ -57,11 +66,12 @@ namespace GoogleVR.HelloVR
         {
             if (gazedAt)
             {
-                coinRotate = true;
+                timerRunning = true;
             }
             else
             {
-                coinRotate = false;
+                timerRunning = false;
+                interactionTimer = 0f;
             }
         }
 
@@ -69,6 +79,7 @@ namespace GoogleVR.HelloVR
         private void Start()
         {
             SetGazedAt(false);
+            player = GameObject.Find("Player");
         }
 
         public void Interact()
@@ -77,7 +88,6 @@ namespace GoogleVR.HelloVR
             {
                 source.Play();
             }
-            player = GameObject.Find("Player");
             Money money = player.GetComponent<Money>();
             if (money != null)
             {
