@@ -17,11 +17,11 @@ public class LightsController : MonoBehaviour
     string lastMessage;
     string lightsAction;
     public GameObject directionalLight;
-    public Button yourButton;
+    // public Button yourButton;
 
     void Start()
     {
-        Button btn = yourButton.GetComponent<Button>();
+        Button btn = GetComponent<Button>();
 		btn.onClick.AddListener(TaskOnClick);
         client = new MqttClient(IPAddress.Parse(brokerIpAddress), brokerPort, false, null);
         
@@ -51,7 +51,7 @@ public class LightsController : MonoBehaviour
         }
 	}
 
-    void TaskOnClick()
+    public void TaskOnClick()
     {
         client.Publish(
             lightTopic,
