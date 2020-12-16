@@ -20,11 +20,14 @@ public class DashboardClient : MonoBehaviour
     public Text motionText;
     public Text lightsText;
 	public GameObject directionalLight;
+	public GameObject[] firePlace;
 	string lastMessage;
 	string motionMsg;
     string lightsMsg;
 	string temperature = "0";
 	volatile bool lights = false;
+	volatile bool fire = false;
+	
 	// Use this for initialization
 	void Start () {
 		// create client instance
@@ -78,6 +81,14 @@ public class DashboardClient : MonoBehaviour
         }
 		if (e.Topic.Equals(temperatureTopic))
 		{
+			if(Int32.Parse(lastMessage) < 16)
+			{
+				fire = true;
+			}
+			else
+			{
+				fire = false;
+			}
 			temperature = lastMessage;
 		}
 	}
@@ -89,6 +100,13 @@ public class DashboardClient : MonoBehaviour
         lightsText.text = lightsMsg;
         if (lights != directionalLight.activeSelf)
 			directionalLight.SetActive(lights);
+        if (fire != firePlace[0].activeSelf)
+		{
+			foreach (GameObject i in firePlace)
+			{
+				i.SetActive(fire);
+			}
+		}
 	}
 
 	// void OnGUI(){
