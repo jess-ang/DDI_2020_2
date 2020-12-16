@@ -6,7 +6,6 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 using uPLibrary.Networking.M2Mqtt.Utility;
 using uPLibrary.Networking.M2Mqtt.Exceptions;
 using UnityEngine.UI;
-
 using System;
 
 public class DashboardClient : MonoBehaviour
@@ -14,13 +13,18 @@ public class DashboardClient : MonoBehaviour
 	public string brokerIpAddress = "192.168.0.113"; //aqui se pone el endpoint aws, mosquito, etc
 	public int brokerPort = 5001;
 	public string temperatureTopic = "casa/sala/temperatura";
-	public string lightTopic = "casa/sala/luz";
+	public string motionTopic = "casa/patio/movimiento";
+	public string lightTopic = "casa/patio/luz";
 	private MqttClient client;
-	public Text displayText;
+	public Text temperatureText;
+    public Text motionText;
+    public Text lightsText;
 	public GameObject directionalLight;
 	string lastMessage;
+	string motionMsg;
+    string lightsMsg;
 	string temperature = "0";
-	volatile bool lightState = false;
+	volatile bool lights = false;
 	// Use this for initialization
 	void Start () {
 		// create client instance
@@ -35,23 +39,43 @@ public class DashboardClient : MonoBehaviour
 		// subscribe to the topic "/home/temperature" with QoS 2
 		client.Subscribe(new string[] { temperatureTopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
 		client.Subscribe(new string[] { lightTopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+        client.Subscribe(new string[] { motionTopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
 
 	}
 	void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
 	{
 		Debug.Log("Received: " + System.Text.Encoding.UTF8.GetString(e.Message));
 		lastMessage = System.Text.Encoding.UTF8.GetString(e.Message);
-		if(e.Topic.Equals(lightTopic))
+		if(e.Topic.Equals(motionTopic))
 		{
-			if(lastMessage.Equals("lightOn"))
+            if(lastMessage.Equals("Detected"))
 			{
-				lightState = true;
+                lightsMsg = "On";
 			}
-			else if(lastMessage.Equals("lightOff"))
+			else if(lastMessage.Equals("Not detected"))
 			{
-				lightState = false;
+				lightsMsg = "Off";
 			}
+            client.Publish(
+                lightTopic,
+                System.Text.Encoding.UTF8.GetBytes(lightsMsg),
+                MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE,
+                true
+            );
+			motionMsg = lastMessage;
 		}
+		if(e.Topic.Equals(lightTopic))
+        {
+            if(lastMessage.Equals("On"))
+			{
+				lights = true;
+			}
+			else if(lastMessage.Equals("Off"))
+			{
+				lights = false;
+			}
+            lightsMsg = lastMessage;
+        }
 		if (e.Topic.Equals(temperatureTopic))
 		{
 			temperature = lastMessage;
@@ -60,18 +84,20 @@ public class DashboardClient : MonoBehaviour
 
 	void Update()
 	{
-		displayText.text = temperature + " C";
-		if (lightState != directionalLight.activeSelf)
-			directionalLight.SetActive(lightState);
+		temperatureText.text = temperature + " C";
+		motionText.text = motionMsg;
+        lightsText.text = lightsMsg;
+        if (lights != directionalLight.activeSelf)
+			directionalLight.SetActive(lights);
 	}
 
-	void OnGUI(){
-		if ( GUI.Button (new Rect (20,40,80,20), "ENVIAR TEST")) {
-			Debug.Log("sending...");
-			client.Publish("casa/sala/luz", System.Text.Encoding.UTF8.GetBytes("lightOn"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, true);
-			Debug.Log("sent");
-		}
-	}
+	// void OnGUI(){
+	// 	if ( GUI.Button (new Rect (20,40,80,20), "ENVIAR TEST")) {
+	// 		Debug.Log("sending...");
+	// 		client.Publish("casa/sala/luz", System.Text.Encoding.UTF8.GetBytes("lightOn"), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, true);
+	// 		Debug.Log("sent");
+	// 	}
+	// }
 
 	void OnApplicationQuit()
 	{
